@@ -1,14 +1,17 @@
-
 #include "car.h"
 #include "road.h"
+#include "road_simulator.h"
 
 #include <cassert>
 #include <stdexcept>
 #include <iostream>
+#include <sstream>
+
 using namespace std;
 namespace tests {
 	using namespace car;
 	using namespace road;
+	using namespace drawer;
 
 	bool operator==(const Coords & lhs, const Coords & rhs) {
 		return lhs.line == rhs.line && lhs.cell == rhs.cell;
@@ -128,4 +131,57 @@ namespace tests {
 		}
 	}
 
+	void DrawRoadTest() {
+		{// empty road
+			Car test_car;
+			Road test_road;
+			ConsoleDrawer test_drawer(test_car, test_road);
+			std::ostringstream out;
+			test_drawer.DrawRoad(out);
+			assert(out.str() == "");
+		}
+		{// default state, road shorter than printing
+			Car test_car;
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+			test_road.AddSection(3, DividerType::DOTTED);
+			ConsoleDrawer test_drawer(test_car, test_road);
+			std::ostringstream out;
+			std::ostringstream right_out;
+			right_out
+				<< "    7| : |\n"
+				<< "    6| : |\n"
+				<< "    5| : |\n"
+				<< "    4| | |\n"
+				<< "    3| | |\n"
+				<< "    2| | |\n"
+				<< "    1| | |\n"
+				<< "    0| |^|";
+			test_drawer.DrawRoad(out);
+			assert(out.str() == right_out.str());
+		}
+		{// default state, road longer than printing
+			Car test_car;
+			Road test_road;
+			test_road.AddSection(7, DividerType::SOLID);
+			test_road.AddSection(3, DividerType::DOTTED);
+			test_road.AddSection(1, DividerType::SOLID);
+			ConsoleDrawer test_drawer(test_car, test_road);
+			std::ostringstream out;
+			std::ostringstream right_out;
+			right_out
+				<< "    9| : |\n"
+				<< "    8| : |\n"
+				<< "    7| : |\n"
+				<< "    6| | |\n"
+				<< "    5| | |\n"
+				<< "    4| | |\n"
+				<< "    3| | |\n"
+				<< "    2| | |\n"
+				<< "    1| | |\n"
+				<< "    0| |^|";
+			test_drawer.DrawRoad(out);
+			assert(out.str() == right_out.str());
+		}
+	}
 }

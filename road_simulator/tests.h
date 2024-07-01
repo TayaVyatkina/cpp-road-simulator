@@ -7,6 +7,8 @@ namespace tests {
 
 	void ConstructionRoadTest();
 	void GettingDividerTest();
+
+	void DrawRoadTest();
 }
 
 void CarTests() {
@@ -19,4 +21,9 @@ void RoadTests() {
 	using namespace tests;
 	ConstructionRoadTest();
 	GettingDividerTest();
+}
+
+void DrawerTests() {
+	using namespace tests;
+	DrawRoadTest();
 }

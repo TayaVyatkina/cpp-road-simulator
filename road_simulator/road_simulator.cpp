@@ -1,7 +1,4 @@
-﻿#include "tests.h"
+#include "road_simulator.h"
+namespace road_similator {
 
-int main()
-{
-	CarTests();
-	RoadTests();
 }

@@ -128,14 +128,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="car.cpp" />
+    <ClCompile Include="console_drawer.cpp" />
     <ClCompile Include="road.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="road_simulator.cpp" />
     <ClCompile Include="tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="car.h" />
+    <ClInclude Include="console_drawer.h" />
     <ClInclude Include="drawer.h" />
     <ClInclude Include="road.h" />
+    <ClInclude Include="road_simulator.h" />
     <ClInclude Include="tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
