@@ -5,4 +5,5 @@ int main()
 	CarTests();
 	RoadTests();
 	DrawerTests();
+	SimulationTest();
 }

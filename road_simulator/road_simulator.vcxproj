@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="car.cpp" />
     <ClCompile Include="console_drawer.cpp" />
+    <ClCompile Include="observer.cpp" />
     <ClCompile Include="road.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="road_simulator.cpp" />
@@ -138,6 +139,8 @@
     <ClInclude Include="car.h" />
     <ClInclude Include="console_drawer.h" />
     <ClInclude Include="drawer.h" />
+    <ClInclude Include="errors.h" />
+    <ClInclude Include="observer.h" />
     <ClInclude Include="road.h" />
     <ClInclude Include="road_simulator.h" />
     <ClInclude Include="tests.h" />

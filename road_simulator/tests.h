@@ -1,5 +1,5 @@
 #pragma once
-#include "car.h"
+
 namespace tests {
 	void ConstructionCarTest();
 	void TurningOnTest();
@@ -9,8 +9,9 @@ namespace tests {
 	void GettingDividerTest();
 
 	void DrawRoadTest();
-}
 
+	void ConstructSimulatorTest();
+}
 void CarTests() {
 	using namespace tests;
 	ConstructionCarTest();
@@ -21,9 +22,15 @@ void RoadTests() {
 	using namespace tests;
 	ConstructionRoadTest();
 	GettingDividerTest();
+
+	GoTest();
 }
 
 void DrawerTests() {
 	using namespace tests;
 	DrawRoadTest();
+}
+void SimulationTest() {
+	using namespace tests;
+	ConstructSimulatorTest();
 }

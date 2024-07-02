@@ -9,6 +9,7 @@ namespace drawer {
 	{}
 
 	void ConsoleDrawer::DrawRoad(std::ostream& out) {
+		system("cls");
 		int len_of_view_section = std::min(static_cast<int>(car_.GetCoords().cell) + 9, static_cast<int>(road_.GetLength()) - 1);
 		if (len_of_view_section > 0) {
 			for (int row = len_of_view_section; row > static_cast<int>(car_.GetCoords().cell); --row) {

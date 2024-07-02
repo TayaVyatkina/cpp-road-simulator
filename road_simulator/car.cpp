@@ -1,5 +1,7 @@
 #include "car.h"
 #include <stdexcept>
+
+#include <iostream>
 namespace car {
 	Coords::Coords(int cell, Line line, DirectionOfMov direction_of_mov) {
 		if (cell >= 0) {
@@ -24,9 +26,20 @@ namespace car {
 		if (coords_.direction_of_mov == DirectionOfMov::FORWARD) {
 			++coords_.cell;
 		}
-		else if (coords_.direction_of_mov == DirectionOfMov::BACKWARD) {
+		if (coords_.direction_of_mov == DirectionOfMov::BACKWARD) {
 			--coords_.cell;
 		}
+		if (coords_.direction_of_mov == DirectionOfMov::LEFT) {
+			if (coords_.line == Line::RIGHT) {
+				coords_.line = Line::LEFT;
+			}
+		}
+		if (coords_.direction_of_mov == DirectionOfMov::RIGHT) {
+			if (coords_.line == Line::LEFT) {
+				coords_.line = Line::RIGHT;
+			}
+		}
+			
 	}
 
 	void Car::GoBackward() {
@@ -35,6 +48,16 @@ namespace car {
 		}
 		else if (coords_.direction_of_mov == DirectionOfMov::BACKWARD) {
 			++coords_.cell;
+		}
+		if (coords_.direction_of_mov == DirectionOfMov::RIGHT) {
+			if (coords_.line == Line::RIGHT) {
+				coords_.line = Line::LEFT;
+			}
+		}
+		if (coords_.direction_of_mov == DirectionOfMov::LEFT) {
+			if (coords_.line == Line::LEFT) {
+				coords_.line = Line::RIGHT;
+			}
 		}
 	}
 

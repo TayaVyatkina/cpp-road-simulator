@@ -12,6 +12,7 @@ namespace tests {
 	using namespace car;
 	using namespace road;
 	using namespace drawer;
+	using namespace road_similator;
 
 	bool operator==(const Coords & lhs, const Coords & rhs) {
 		return lhs.line == rhs.line && lhs.cell == rhs.cell;
@@ -86,9 +87,6 @@ namespace tests {
 		}
 	}
 
-	void GoTest() {}
-
-
 	void ConstructionRoadTest(){
 		{// empty road
 			Road test_road;
@@ -106,6 +104,73 @@ namespace tests {
 			test_road.AddSection(3, DividerType::DOTTED);
 			assert(test_road.GetLength() == 8);
 
+		}
+	}
+
+	void GoTest() {
+		{// go forward
+			Car test_car;
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoForward();
+			assert(test_car.GetCoords() == Coords(1, Line::RIGHT, DirectionOfMov::FORWARD));
+		}
+		{// go backward
+			Car test_car(Coords{ 1, Line::RIGHT, DirectionOfMov::FORWARD });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoBackward();
+			assert(test_car.GetCoords() == Coords(0, Line::RIGHT, DirectionOfMov::FORWARD));
+		}
+		{// right line, go right
+			Car test_car(Coords{ 0, Line::RIGHT, DirectionOfMov::RIGHT });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoForward();
+			assert(test_car.GetCoords() == Coords(0, Line::RIGHT, DirectionOfMov::RIGHT));
+		}
+		{// right line, go left
+			Car test_car(Coords{ 0, Line::RIGHT, DirectionOfMov::LEFT });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoForward();
+			assert(test_car.GetCoords() == Coords(0, Line::LEFT, DirectionOfMov::LEFT));
+		}
+		{// left line, go left
+			Car test_car(Coords{ 0, Line::LEFT, DirectionOfMov::LEFT });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoForward();
+			assert(test_car.GetCoords() == Coords(0, Line::LEFT, DirectionOfMov::LEFT));
+		}
+		{// left line, go right
+			Car test_car(Coords{ 0, Line::LEFT, DirectionOfMov::RIGHT });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoForward();
+			assert(test_car.GetCoords() == Coords(0, Line::RIGHT, DirectionOfMov::RIGHT));
+		}
+		{// right line, turn left, go backward
+			Car test_car(Coords{ 0, Line::RIGHT, DirectionOfMov::LEFT });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoBackward();
+			assert(test_car.GetCoords() == Coords(0, Line::RIGHT, DirectionOfMov::LEFT));
+		}
+		{// right line, turn right, go backward
+			Car test_car(Coords{ 0, Line::RIGHT, DirectionOfMov::RIGHT });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+
+			test_car.GoBackward();
+			assert(test_car.GetCoords() == Coords(0, Line::LEFT, DirectionOfMov::RIGHT));
 		}
 	}
 
@@ -182,6 +247,30 @@ namespace tests {
 				<< "    0| |^|";
 			test_drawer.DrawRoad(out);
 			assert(out.str() == right_out.str());
+		}
+	}
+
+	void ConstructSimulatorTest() {
+		{// default state, road shorter than printing
+			Car test_car(Coords{ 0, Line::LEFT, DirectionOfMov::FORWARD });
+			Road test_road;
+			test_road.AddSection(5, DividerType::SOLID);
+			test_road.AddSection(3, DividerType::DOTTED);
+			ClicksHandler ch(test_car, test_road);
+			ch.SimulateDriving();
+			/*std::ostringstream out;
+			std::ostringstream right_out;
+			right_out
+				<< "    7| : |\n"
+				<< "    6| : |\n"
+				<< "    5| : |\n"
+				<< "    4| | |\n"
+				<< "    3| | |\n"
+				<< "    2| | |\n"
+				<< "    1| | |\n"
+				<< "    0| |^|";
+			test_drawer.DrawRoad(out);
+			assert(out.str() == right_out.str());*/
 		}
 	}
 }
