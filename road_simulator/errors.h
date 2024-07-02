@@ -1,5 +1,9 @@
 #pragma once
-namespace errors {
+#include <iostream>
+#include <string>
+
+namespace observer {
+
 class CarDrivingError {
 public:
     enum class Category {
@@ -11,9 +15,10 @@ public:
 
     Category GetCategory() const;
 
-    bool operator==(CarDrivingError rhs) const;
+    std::string ToString() const;
 
 private:
     Category category_;
 };
-}
+
+}//namespace observer 

@@ -1,6 +1,8 @@
 #include "car.h"
 #include "road.h"
+#include "observer.h"
 #include "road_simulator.h"
+#include "errors.h"
 
 #include <cassert>
 #include <stdexcept>
@@ -12,6 +14,7 @@ namespace tests {
 	using namespace car;
 	using namespace road;
 	using namespace drawer;
+	using namespace observer;
 	using namespace road_similator;
 
 	bool operator==(const Coords & lhs, const Coords & rhs) {
@@ -221,7 +224,7 @@ namespace tests {
 				<< "    3| | |\n"
 				<< "    2| | |\n"
 				<< "    1| | |\n"
-				<< "    0| |^|";
+				<< "    0| |^|\n";
 			test_drawer.DrawRoad(out);
 			assert(out.str() == right_out.str());
 		}
@@ -244,9 +247,41 @@ namespace tests {
 				<< "    3| | |\n"
 				<< "    2| | |\n"
 				<< "    1| | |\n"
-				<< "    0| |^|";
+				<< "    0| |^|\n";
 			test_drawer.DrawRoad(out);
 			assert(out.str() == right_out.str());
+		}
+	}
+	
+	void ObserverTest() {
+		{// driving into the oncoming lane
+			Road test_road;
+			test_road.AddSection(2, DividerType::SOLID);
+			std::ostringstream message_out;
+			TrafficLawsObserver observer(message_out);
+			Coords old_state(1, Line::RIGHT, DirectionOfMov::FORWARD);
+			Coords new_state(0, Line::RIGHT, DirectionOfMov::FORWARD);
+
+			observer.OnRoadConditionsChanged(test_road, old_state, new_state);
+			observer::CarDrivingError right_error(observer::CarDrivingError::Category::DrivingIntoOncomingLane);
+			std::ostringstream right_answer;
+			right_answer << right_error.ToString();
+			assert(message_out.str() == right_answer.str());
+		}
+		{// crossing solid
+			Road test_road;
+			test_road.AddSection(2, DividerType::SOLID);
+			std::ostringstream message_out;
+			TrafficLawsObserver observer(message_out);
+			Coords old_state(0, Line::RIGHT, DirectionOfMov::LEFT);
+			Coords new_state(0, Line::LEFT, DirectionOfMov::LEFT);
+			observer.OnRoadConditionsChanged(test_road, old_state, new_state);
+
+			observer.OnRoadConditionsChanged(test_road, old_state, new_state);
+			observer::CarDrivingError right_error(observer::CarDrivingError::Category::CrossingSolid);
+			std::ostringstream right_answer;
+			right_answer << right_error.ToString();
+			assert(message_out.str() == right_answer.str());
 		}
 	}
 
@@ -254,9 +289,10 @@ namespace tests {
 		{// default state, road shorter than printing
 			Car test_car(Coords{ 0, Line::LEFT, DirectionOfMov::FORWARD });
 			Road test_road;
-			test_road.AddSection(5, DividerType::SOLID);
-			test_road.AddSection(3, DividerType::DOTTED);
-			ClicksHandler ch(test_car, test_road);
+			test_road.AddSection(7, DividerType::SOLID);
+			test_road.AddSection(7, DividerType::DOTTED);
+			observer::TrafficLawsObserver observer(cout);
+			ClicksHandler ch(test_car, test_road, cout);
 			ch.SimulateDriving();
 			/*std::ostringstream out;
 			std::ostringstream right_out;
@@ -273,4 +309,5 @@ namespace tests {
 			assert(out.str() == right_out.str());*/
 		}
 	}
+
 }

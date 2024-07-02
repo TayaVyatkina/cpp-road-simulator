@@ -11,11 +11,11 @@ namespace road {
 			road_.emplace_back(divider);
 		}
 	}
-	size_t Road::GetLength() {
+	size_t Road::GetLength() const {
 		return road_.size();
 	}
 
-	DividerType Road::GetDividerType(int road_section) {
+	DividerType Road::GetDividerType(int road_section) const {
 		return road_.at(road_section);
 	}
 }

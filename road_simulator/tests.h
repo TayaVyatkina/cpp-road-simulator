@@ -11,6 +11,7 @@ namespace tests {
 	void DrawRoadTest();
 
 	void ConstructSimulatorTest();
+	void ObserverTest();
 }
 void CarTests() {
 	using namespace tests;
@@ -33,4 +34,5 @@ void DrawerTests() {
 void SimulationTest() {
 	using namespace tests;
 	ConstructSimulatorTest();
+	ObserverTest();
 }

@@ -12,9 +12,9 @@ public:
 
 	void AddSection(size_t, DividerType);
 
-	size_t GetLength();
+	size_t GetLength() const;
 
-	DividerType GetDividerType(int);
+	DividerType GetDividerType(int) const;
 
 private:
 	std::deque<DividerType> road_;

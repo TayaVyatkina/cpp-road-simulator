@@ -1,17 +1,21 @@
+#include <memory>
+
 #include "road_simulator.h"
 namespace road_similator {
-    ClicksHandler::ClicksHandler(car::Car& car, road::Road& road)
+    ClicksHandler::ClicksHandler(car::Car& car, road::Road& road, std::ostream& out = std::cout)
         : car_(car)
         , road_(road)
         , drawer_(drawer::ConsoleDrawer(car, road))
-        , observer_(new observer::TrafficLawsObserver())
+        , observer_(new observer::TrafficLawsObserver(out))
+        , out_(out)
     {}
 
     void ClicksHandler::SimulateDriving() {
-        drawer_.DrawRoad();
+        drawer_.DrawRoad(out_);
         while (true) {
             if (_kbhit()) // слушатель нажатия
             {
+                auto old_state = car_.GetCoords();
                 switch (_getch()) // ждёт нажатия без Enter
                 {
                 case 72: //up
@@ -27,8 +31,13 @@ namespace road_similator {
                     car_.TurnOnRight();
                     break;
                 }
-                (*observer_).OnRoadConditionsChanged(car_, road_);
-                drawer_.DrawRoad();//update picture
+                //update picture
+                drawer_.DrawRoad(out_);
+                // check rules compliance
+                (*observer_).OnRoadConditionsChanged(road_
+                    , std::move(old_state)/* old_state*/
+                    , car_.GetCoords());/* new_state*/
+     
             }
         }
     }

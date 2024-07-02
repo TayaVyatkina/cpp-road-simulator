@@ -1,6 +1,6 @@
-#include "console_drawer.h"
-
 #include "iomanip"
+
+#include "console_drawer.h"
 
 namespace drawer {
 	ConsoleDrawer::ConsoleDrawer(car::Car& car, road::Road road)
@@ -55,6 +55,7 @@ namespace drawer {
 			PrintEmptyRoadSection(out);
 		}
 		PrintEdge(out);
+		out << std::endl;
 	}
 
 	void ConsoleDrawer::PrintCar(std::ostream& out) {
