@@ -14,3 +14,5 @@
 	- CrossingSolid - пересечение сплошного разделителя
 	- DrivingAgainstDirectionOfMovement - выезд на встречную, движение задом
 	- GetOffTheRoad - наезд на ограждение, в тупик
+
+![UML diagram](UML.jpg)
