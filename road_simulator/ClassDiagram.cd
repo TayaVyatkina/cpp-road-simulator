@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="car::Car" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAA0AABAAAQAAAAgAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>car.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="drawer::ConsoleDrawer" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAIAACgAAAAAAAAAIAAAAAAAAAQAAQAAAACAFAAAAA=</HashCode>
+      <FileName>console_drawer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="observer::CarDrivingError" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="observer::CarDrivingError::Category" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>errors.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAEAAAAAAAAAAAAgAAAAAAIAAAAAAA=</HashCode>
+      <FileName>errors.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="observer::CarObserver" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>observer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="observer::TrafficLawsObserver" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAEAAQAAAEAAAAAAAkAAQAAAAAABAAAAAA=</HashCode>
+      <FileName>observer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="road::Road" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAJAAAAAAAAAAQQAAAAAAAAgAAAAA=</HashCode>
+      <FileName>road.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="road_similator::ClicksHandler" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAIIAAgQAAAAAAAAAAAAEAAAAgQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>road_simulator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="car::Coords" Collapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAEAAIAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>car.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="car::DirectionOfMov" Collapsed="true">
+    <Position X="5.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAIAAAAAAAAA=</HashCode>
+      <FileName>car.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="car::Line" Collapsed="true">
+    <Position X="9.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>car.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="road::DividerType" Collapsed="true">
+    <Position X="7.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>road.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

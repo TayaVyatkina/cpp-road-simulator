@@ -138,12 +138,14 @@
   <ItemGroup>
     <ClInclude Include="car.h" />
     <ClInclude Include="console_drawer.h" />
-    <ClInclude Include="drawer.h" />
     <ClInclude Include="errors.h" />
     <ClInclude Include="observer.h" />
     <ClInclude Include="road.h" />
     <ClInclude Include="road_simulator.h" />
     <ClInclude Include="tests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

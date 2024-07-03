@@ -33,6 +33,7 @@ void DrawerTests() {
 }
 void SimulationTest() {
 	using namespace tests;
-	ConstructSimulatorTest();
 	ObserverTest();
+	ConstructSimulatorTest();
+	
 }

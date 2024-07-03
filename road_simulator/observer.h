@@ -6,6 +6,7 @@
 
 namespace observer {
 
+// basic abstract class for constructing different observers
 class CarObserver {
 public:
     CarObserver() = default;
@@ -20,12 +21,18 @@ class TrafficLawsObserver : public CarObserver {
 public:
     TrafficLawsObserver(std::ostream&);
 
-    void OnRoadConditionsChanged(const road::Road& road, const car::Coords old_state, const car::Coords& new_state) const override;
+    void OnRoadConditionsChanged(const road::Road&, const car::Coords, const car::Coords&) const override;
 
 private:
-    bool IsCrossingSolid(const car::Line& old_side, const car::Line& new_side, const road::DividerType& divider) const;
+    bool IsCrossingSolid(const car::Line&, const car::Line&, const road::DividerType&) const;
 
-    bool IsDrivingIntoOncomingLane(const car::Coords& old_state, const car::Coords& new_state) const;
+    bool IsDrivingAgainstDirectionOfMovement(const car::Coords&, const car::Coords&) const;
+
+    bool IsGetOffTheRoad(const car::Coords&, const size_t) const;
+
+    bool IsTurning(const car::Coords&, const car::Coords&) const;
+
+    bool IsFinishTurning(const car::Coords&, const car::Coords&) const;
 
     std::ostream& out_;
 };

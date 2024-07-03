@@ -10,16 +10,55 @@ namespace observer {
 
     void TrafficLawsObserver::OnRoadConditionsChanged(const road::Road& road, const car::Coords old_state, const car::Coords& new_state) const{
         try {
-            if (IsCrossingSolid(old_state.line, new_state.line, road.GetDividerType(new_state.cell))) {
-                throw observer::CarDrivingError(observer::CarDrivingError::Category::CrossingSolid);
-            }
-            if (IsDrivingIntoOncomingLane(old_state, new_state)) {
-                throw observer::CarDrivingError(observer::CarDrivingError::Category::DrivingIntoOncomingLane);
+            if (IsDrivingAgainstDirectionOfMovement(old_state, new_state)) {
+                throw observer::CarDrivingError(observer::CarDrivingError::Category::DrivingAgainstDirectionOfMovement);
             }
         }
         catch (observer::CarDrivingError& err) {
             out_ << err.ToString() << '\n';
         }
+        try {
+            if (IsGetOffTheRoad(new_state, road.GetLength())) {
+                throw observer::CarDrivingError(observer::CarDrivingError::Category::GetOffTheRoad);
+            }
+        }
+        catch(observer::CarDrivingError& err){
+            out_ << err.ToString() << '\n';
+            throw err;
+        }
+
+        try {
+            if (IsCrossingSolid(old_state.line, new_state.line, road.GetDividerType(new_state.cell))) {
+                throw observer::CarDrivingError(observer::CarDrivingError::Category::CrossingSolid);
+            }
+        }
+        catch (observer::CarDrivingError& err) {
+            out_ << err.ToString() << '\n';
+        }
+ 
+        // check right turning    
+        if (IsTurning(old_state, new_state)) {
+            out_ << "Turning\n";
+        }
+        if (IsFinishTurning(old_state, new_state)) {
+            out_ << "Successful turning\n";
+        }
+    }
+
+    bool TrafficLawsObserver::IsTurning(const car::Coords& old_state, const car::Coords& new_state) const {
+        return old_state.line != new_state.line; 
+    }
+
+    bool TrafficLawsObserver::IsFinishTurning(const car::Coords& old_state, const car::Coords& new_state) const {
+        if (old_state.line == new_state.line && old_state.cell == new_state.cell) {
+            if (old_state.line == car::Line::LEFT) {
+                return old_state.direction_of_mov != car::DirectionOfMov::BACKWARD && new_state.direction_of_mov == car::DirectionOfMov::BACKWARD;
+            }
+            else {// ar::Line::RIGHT
+                return old_state.direction_of_mov != car::DirectionOfMov::FORWARD && new_state.direction_of_mov == car::DirectionOfMov::FORWARD;
+            }
+        }
+        return false;
     }
 
     bool TrafficLawsObserver::IsCrossingSolid(const car::Line& old_side, const car::Line& new_side, const road::DividerType& divider) const {
@@ -29,24 +68,24 @@ namespace observer {
         return false;
     }
 
-    bool TrafficLawsObserver::IsDrivingIntoOncomingLane(const car::Coords& old_state, const car::Coords& new_state) const {
-        if (old_state.cell != new_state.cell) {// движение по текущей полосе
+    bool TrafficLawsObserver::IsDrivingAgainstDirectionOfMovement(const car::Coords& old_state, const car::Coords& new_state) const {
+        if (old_state.line == new_state.line && old_state.cell != new_state.cell) {
             if (old_state.line == car::Line::RIGHT) {
-                return old_state.cell > new_state.cell;
+                return old_state.cell > new_state.cell || old_state.direction_of_mov == car::DirectionOfMov::BACKWARD;
             }
             if (old_state.line == car::Line::LEFT) {
-                return old_state.cell < new_state.cell;
+                return old_state.cell < new_state.cell || old_state.direction_of_mov == car::DirectionOfMov::FORWARD;
             }
         }
         return false;
     }
 
-    std::ostream& operator<<(std::ostream& output, CarDrivingError err) {
-        output << std::string(err.ToString().length() + 2, '-') << '\n'
-            << '|' << err.ToString() << '|' << '\n'
-            << std::string(err.ToString().length() + 2, '-');
-        return output;
+    bool TrafficLawsObserver::IsGetOffTheRoad(const car::Coords& new_side, const size_t len) const{
+        return new_side.cell >= len || new_side.cell <= -1;
     }
+
+
+    // Class CarDrivingError
 
     CarDrivingError::CarDrivingError(Category category)
         :category_(std::move(category))
@@ -59,13 +98,17 @@ namespace observer {
     std::string CarDrivingError::ToString() const {
         using namespace std::literals;
         const static std::string CrossingSolid = "Crossing solid divider!"s;
-        const static std::string DrivingIntoOncomingLane = "Driving into the oncoming lane!"s;
+        const static std::string DrivingAgainstDirectionOfMovement = "Driving against the direction of movement!"s;
+        const static std::string GetOffTheRoad = "Crash into the fence!"s;
+
         switch (category_) {
         case Category::CrossingSolid:
             return CrossingSolid;
-        case Category::DrivingIntoOncomingLane:
-            return DrivingIntoOncomingLane;
+        case Category::DrivingAgainstDirectionOfMovement:
+            return DrivingAgainstDirectionOfMovement;
+        case Category::GetOffTheRoad:
+            return GetOffTheRoad;
         }
     }
 
-}
+}// namespace observer 

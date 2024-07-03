@@ -1,28 +1,33 @@
 #pragma once
-#include "road.h"
-#include "car.h"
-
 #include <iostream>
-// composition
+
+#include "car.h"
+#include "road.h"
+
 namespace drawer {
+
 class ConsoleDrawer {
 public:
-	ConsoleDrawer(car::Car& car, road::Road road);
+	ConsoleDrawer(car::Car&, road::Road&);
 
-	void DrawRoad(std::ostream& out = std::cout);
+	void DrawRoad(std::ostream&);
 
 private:
-	void PrintEdge(std::ostream& out);
+	void PrintEdge(std::ostream&);
 
-	void PrintDivider(std::ostream& out, size_t row);
+	void PrintDivider(std::ostream&, size_t);
 
-	void PrintEmptyRoadSection(std::ostream& out);
+	void PrintEmpty(std::ostream&);
 
-	void PrintSectionWithCar(std::ostream& out);
+	void PrintEmptyRoadSection(std::ostream&, size_t);
 
-	void PrintCar(std::ostream& out);
+	void PrintSectionWithCar(std::ostream&);
+
+	void PrintCar(std::ostream&);
+	 
+	void PrintFence(std::ostream&);
 
 	car::Car& car_;
-	road::Road road_;
+	road::Road& road_;
 };
-}
+}// namespace drawer 

@@ -7,8 +7,9 @@ namespace observer {
 class CarDrivingError {
 public:
     enum class Category {
-        CrossingSolid,// пересечение сплошной
-        DrivingIntoOncomingLane // выезд на встречную 
+          CrossingSolid// пересечение сплошной
+        , DrivingAgainstDirectionOfMovement // выезд на встречную, движение задом
+        , GetOffTheRoad // наезд на ограждение, в тупик
     };
 
     CarDrivingError(Category category);

@@ -1,6 +1,7 @@
 #pragma once
-#include <iostream>
 #include <conio.h>
+#include <iostream>
+#include <memory>
 #include <windows.h>
 
 #include "car.h"
@@ -14,14 +15,17 @@ class ClicksHandler {
 public:
     ClicksHandler() = delete;
 
-    ClicksHandler(car::Car&, road::Road&, std::ostream&);
+	~ClicksHandler() = default;
+
+    explicit ClicksHandler(car::Car&, road::Road&, std::ostream&);
 
 	void SimulateDriving();
+
 private:
 	car::Car& car_;
 	road::Road& road_;
-	drawer::ConsoleDrawer drawer_;
-    observer::TrafficLawsObserver* observer_ = nullptr;
+	std::unique_ptr<drawer::ConsoleDrawer> drawer_;
+    std::unique_ptr<observer::TrafficLawsObserver> observer_;
 	std::ostream& out_;
 };
 

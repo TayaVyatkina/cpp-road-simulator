@@ -1,45 +1,48 @@
 #pragma once
 namespace car {
-	enum class DirectionOfMov {
-		// relative to the current side of the road
-		FORWARD = 0,
-		RIGHT,
-		BACKWARD,
-		LEFT
-	};
 
-	enum class Line {
-		LEFT,
-		RIGHT
-	};
+enum class DirectionOfMov {
+	// relative to the current side of the road
+	FORWARD = 0,
+	RIGHT,
+	BACKWARD,
+	LEFT
+};
 
-	struct Coords {
-		Coords() = default;
+enum class Line {
+	LEFT,
+	RIGHT
+};
 
-		explicit Coords(int cell, Line line, DirectionOfMov direction_of_mov);
+struct Coords {
+	Coords() = default;
+	explicit Coords(int, Line, DirectionOfMov);
 
-		size_t cell = 0;
-		Line line = Line::RIGHT;
-		DirectionOfMov direction_of_mov = DirectionOfMov::FORWARD;
-	};
+	int cell = 0;
+	Line line = Line::RIGHT;
+	DirectionOfMov direction_of_mov = DirectionOfMov::FORWARD;
+};
 
-	class Car {
-	public:
-		Car() = default;
+class Car {
+public:
+	Car() = default;
 
-		explicit Car(Coords coords);
+	explicit Car(Coords);
 
-		Coords GetCoords() const;
+	Coords GetCoords() const;
 
-		void GoForward();
+	void SetCoords(const Coords&);
 
-		void GoBackward();
+	void GoForward();
 
-		void TurnOnRight();
+	void GoBackward();
 
-		void TurnOnLeft();
+	void TurnOnRight();
 
-	private:
-		Coords coords_;
-	};
-}
+	void TurnOnLeft();
+
+private:
+	Coords coords_;
+};
+
+}// namespace car 
