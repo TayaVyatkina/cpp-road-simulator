@@ -374,12 +374,14 @@ namespace tests {
 		}
 	}
 
+
+	// test sample
 	void ConstructSimulatorTest() {
-		{// default state, road shorter than printing
-			Car test_car(Coords{ 0, Line::LEFT, DirectionOfMov::FORWARD });
+		{
+			Car test_car(Coords{ 0, Line::RIGHT, DirectionOfMov::FORWARD });
 			Road test_road;
-			test_road.AddSection(7, DividerType::SOLID);
-			test_road.AddSection(7, DividerType::DOTTED);
+			test_road.AddSection(9, DividerType::SOLID);
+			test_road.AddSection(9, DividerType::DOTTED);
 			observer::TrafficLawsObserver observer(cout);
 			ClicksHandler ch(test_car, test_road, cout);
 			ch.SimulateDriving();
